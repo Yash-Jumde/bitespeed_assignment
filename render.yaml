@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: identity-reconciliation
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        fromDatabase:
+          name: identity-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: identity-db
+          property: port
+      - key: DB_USERNAME
+        fromDatabase:
+          name: identity-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: identity-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: identity-db
+          property: database
+
+databases:
+  - name: identity-db
+    plan: free
+    databaseName: identity_reconciliation
